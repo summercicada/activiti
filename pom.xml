@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.hans</groupId>
-    <artifactId>look-beauty</artifactId>
+    <artifactId>activiti</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>look-beauty</name>
+    <name>activiti</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>
@@ -33,20 +33,15 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-            <scope>runtime</scope>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
@@ -134,7 +129,6 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
-
 
 
     </dependencies>
