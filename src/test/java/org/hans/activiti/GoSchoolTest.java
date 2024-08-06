@@ -6,14 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
-import org.activiti.engine.runtime.ExecutionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Event;
+import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Map;
 
 @SpringBootTest
@@ -52,13 +54,34 @@ public class GoSchoolTest {
     }
 
     @Test
-    void getActive() {
-        RuntimeService runtimeService = processEngine.getRuntimeService();
-        ExecutionQuery executionQuery = runtimeService.createExecutionQuery();
-        executionQuery.
-        for (Event event : processInstanceEvents) {
-            log.info("event id : {}", event.getId());           //
+    void getActiveTask() {
+        TaskService taskService = processEngine.getTaskService();
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        List<Task> list = taskQuery.active().list();
+        for (Task task : list) {
+            log.info("task: {}", task.getId());// 2507
+            log.info("task: {}", task.getProcessDefinitionId());                    // GoSchool:1:3
+            log.info("task: {}", task.getName());    // apply
+            log.info("task: {}", task.getDescription());            // 申請入學
         }
+
+    }
+
+    @Test
+    void executeActiveTask() {
+        TaskService taskService = processEngine.getTaskService();
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        Task task = taskQuery.active().taskName("apply").singleResult();
+
+
+
+        String taskId = task.getId();
+
+        log.info("task: {}", taskId);
+
+
+        taskService.complete(taskId);
+
 
     }
 }

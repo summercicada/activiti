@@ -16,7 +16,7 @@ public class ActivitiConfig {
     @Bean
     public ProcessEngineConfiguration processEngineConfiguration() {
         ProcessEngineConfiguration configuration = new StandaloneProcessEngineConfiguration();
-        configuration.setJdbcUrl("jdbc:postgresql://localhost:5432/beauty");
+        configuration.setJdbcUrl("jdbc:postgresql://localhost:5432/hans");
         configuration.setJdbcUsername("postgres");
         configuration.setJdbcPassword("admin");
         configuration.setJdbcDriver("org.postgresql.Driver");
@@ -28,7 +28,6 @@ public class ActivitiConfig {
 
     @Bean
     public ProcessEngine processEngine(@Qualifier("processEngineConfiguration") ProcessEngineConfiguration configuration) {
-        ProcessEngine processEngine = configuration.buildProcessEngine();
-        return processEngine;
+        return configuration.buildProcessEngine();
     }
 }
