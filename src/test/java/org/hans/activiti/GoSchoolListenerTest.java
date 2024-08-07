@@ -13,6 +13,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
+import org.hans.activiti.listener.HansTaskListener;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,7 +22,12 @@ import java.util.Map;
 
 @SpringBootTest
 @Slf4j
-public class GoSchoolTest {
+public class GoSchoolListenerTest {
+
+
+    @Resource
+    private HansTaskListener hansTaskListener;
+
 
 
     @Resource
@@ -31,8 +37,8 @@ public class GoSchoolTest {
     void deployment() {
         log.info("start deployment Go School");
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().addClasspathResource("GoSchool.bpmn20.xml");
-        deploymentBuilder.name("Go-School-1");
+        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().addClasspathResource("GoSchoolListener.bpmn20.xml");
+        deploymentBuilder.name("Go-School-listener");
         Deployment deploy = deploymentBuilder.deploy();
 
         log.info("deployment Go School id: {}", deploy.getId());
@@ -41,17 +47,25 @@ public class GoSchoolTest {
     @Test
     void startGoSchool() {
 
-        Map<String, Object> params = Maps.newHashMap();
-        params.put("username", "xiaoman");
-        params.put("age", 4);
-
-
         RuntimeService runtimeService = processEngine.getRuntimeService();
-        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("GoSchool", "bk-2", params);
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("GoSchoolListener", "bk-listener-2");
         log.info("processInstance id : {}", processInstance.getId());                   //2501 act_ru_execution->id.
         log.info("processInstance id : {}", processInstance.getProcessDefinitionId());  //GoSchool:1:3
         log.info("processInstance id : {}", processInstance.getActivityId());           // null
         log.info("processInstance id : {}", processInstance.getProcessVariables());           // null
+
+
+        runtimeService = processEngine.getRuntimeService();
+        processInstance = runtimeService.startProcessInstanceByKey("GoSchoolListener", "bk-listener-2");
+        log.info("processInstance id : {}", processInstance.getId());                   //2501 act_ru_execution->id.
+        log.info("processInstance id : {}", processInstance.getProcessDefinitionId());  //GoSchool:1:3
+        log.info("processInstance id : {}", processInstance.getActivityId());           // null
+        log.info("processInstance id : {}", processInstance.getProcessVariables());           // null
+
+
+        log.info("hansTaskListener hash : {}", hansTaskListener.hashCode());           // null
+
+
 
     }
 
@@ -59,8 +73,7 @@ public class GoSchoolTest {
     void deleteDeployment() {
 
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        repositoryService.deleteDeployment("22501", true);
-        repositoryService.deleteDeployment("27501", true);
+        repositoryService.deleteDeployment("77501", true);
     }
 
     @Test

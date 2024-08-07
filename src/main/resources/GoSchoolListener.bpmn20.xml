@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="GoSchoolListener" name="GoSchoolListener" isExecutable="true">
+    <startEvent id="starter" name="开始"/>
+    <endEvent id="sid-cf474fba-ac24-415d-800e-7adeda791c99"/>
+    <userTask id="apply" name="申请入学">
+      <extensionElements>
+        <activiti:taskListener class="org.hans.activiti.listener.HansTaskListener" event="create" delegateExpression="${hansTaskListener}"/>
+        <activiti:taskListener class="org.hans.activiti.listener.HansTaskListener" event="complete" delegateExpression="${hansTaskListener}"/>
+      </extensionElements>
+    </userTask>
+    <userTask id="allow" name="批准入学"/>
+    <sequenceFlow id="sid-42306550-d831-4ffd-8670-ff2c48599ac0" sourceRef="starter" targetRef="apply"/>
+    <sequenceFlow id="sid-a7034ff3-b5fe-4174-bb79-af7454dde3f4" sourceRef="apply" targetRef="allow"/>
+    <sequenceFlow id="sid-114b1053-53ad-4406-b390-6524f02b6206" sourceRef="allow" targetRef="sid-cf474fba-ac24-415d-800e-7adeda791c99"/>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_GoSchoolListener">
+    <bpmndi:BPMNPlane bpmnElement="GoSchoolListener" id="BPMNPlane_GoSchoolListener">
+      <bpmndi:BPMNShape id="shape-c1bbb18a-9f30-45d3-a856-373a56456ebb" bpmnElement="starter">
+        <omgdc:Bounds x="-277.25" y="-34.75" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-961d9f8c-cd10-4467-8127-b46947fe402d" bpmnElement="sid-cf474fba-ac24-415d-800e-7adeda791c99">
+        <omgdc:Bounds x="173.75" y="-34.75" width="30.0" height="30.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-3ebadf2b-e6f5-41c9-89dd-9c58f113c288" bpmnElement="apply">
+        <omgdc:Bounds x="-162.75" y="-59.75" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape-ef499c15-17ad-4bdf-b80a-d364af5f4536" bpmnElement="allow">
+        <omgdc:Bounds x="3.75" y="-59.75" width="100.0" height="80.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge-cf61f25a-0b9c-4b1f-afcb-49ea18fa6f22" bpmnElement="sid-42306550-d831-4ffd-8670-ff2c48599ac0">
+        <omgdi:waypoint x="-247.25" y="-19.75"/>
+        <omgdi:waypoint x="-162.75" y="-19.75"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-631099c2-71b4-4821-bfb1-716d9865d9e0" bpmnElement="sid-a7034ff3-b5fe-4174-bb79-af7454dde3f4">
+        <omgdi:waypoint x="-62.75" y="-19.75"/>
+        <omgdi:waypoint x="3.75" y="-19.75"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge-337fcb46-3e05-42b3-ac74-6142bdf88f6f" bpmnElement="sid-114b1053-53ad-4406-b390-6524f02b6206">
+        <omgdi:waypoint x="103.75" y="-19.75"/>
+        <omgdi:waypoint x="103.75" y="-19.75"/>
+        <omgdi:waypoint x="173.75" y="-19.75"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
