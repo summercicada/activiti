@@ -1,32 +1,33 @@
 package org.hans.activiti.listener;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.ExecutionListener;
 import org.activiti.engine.delegate.TaskListener;
 import org.hans.activiti.service.MyTestService;
 import org.springframework.stereotype.Service;
 
 
 @Slf4j
-@Service
-public class HansTaskListener implements TaskListener {
+@Service(value = "hansTaskListener")
+public class HansTaskListener implements ExecutionListener {
+
+    @PostConstruct
+    public void init() {
+        log.info("----------------------");
+    }
 
     @Resource
     private MyTestService myTestService;
 
     @Override
-    public void notify(DelegateTask delegateTask) {
-
-
+    public void notify(DelegateExecution execution) {
         log.info("hashCode: {}", this.getClass().hashCode());
-        log.info("getId: {}", delegateTask.getId());
-        log.info("getName: {}", delegateTask.getName());
-        log.info("getEventName: {}", delegateTask.getEventName());
-        log.info("getName: {}", delegateTask.getAssignee());
-
-        delegateTask.setAssignee("天王老子");
-
+        log.info("getId: {}", execution.getId());
+        log.info("getEventName: {}", execution.getEventName());
         myTestService.test();
 
     }

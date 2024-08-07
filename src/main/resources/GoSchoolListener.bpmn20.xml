@@ -5,8 +5,8 @@
     <endEvent id="sid-cf474fba-ac24-415d-800e-7adeda791c99"/>
     <userTask id="apply" name="申请入学">
       <extensionElements>
-        <activiti:taskListener class="org.hans.activiti.listener.HansTaskListener" event="create" delegateExpression="${hansTaskListener}"/>
-        <activiti:taskListener class="org.hans.activiti.listener.HansTaskListener" event="complete" delegateExpression="${hansTaskListener}"/>
+        <activiti:executionListener class="org.hans.activiti.listener.HansTaskListener" event="start" delegateExpression="${hansTaskListener}"/>
+        <activiti:executionListener class="org.hans.activiti.listener.HansTaskListener" event="end" delegateExpression="${hansTaskListener}"/>
       </extensionElements>
     </userTask>
     <userTask id="allow" name="批准入学"/>
